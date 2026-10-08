@@ -1,0 +1,58 @@
+# Emphasis markers: the shipped defaults (docs/tech_impl/02-static-checks.md, "emphasis-density").
+#
+# Don't edit this file — extend it in ~/.agentlint/emphasis.toml. There, a [[marker]] with a new
+# id adds a marker, one reusing an id overrides only the fields it sets, and `enabled = false`
+# switches a marker off.
+#
+#   id        the name shown in findings
+#   pattern   a Python regular expression, matched against prose with code removed
+#   weight    points per match
+#   scale     how a match's run length counts: "flat" (default), "linear" (n) or "superlinear" (2n - 1)
+#   unit      what a run's length counts: "chars" (default) or "words"
+#
+# Chosen on a real configuration of 619 sources (2026-10-02). Two-word capital runs were mostly
+# acronyms and SQL ("GROUP BY", "REST API"), so caps-run needs three words; a bare "!" matched HTML
+# comments ("<!--") and "!=", so it must follow a word.
+
+[[marker]]
+id = "must"
+pattern = '\bMUST\b'
+weight = 2.0
+
+[[marker]]
+id = "never"
+pattern = '\bNEVER\b'
+weight = 2.0
+
+[[marker]]
+id = "do-not"
+pattern = '''\bDO NOT\b|\bDON'T\b'''
+weight = 2.0
+
+[[marker]]
+id = "alarm-word"
+pattern = '\b(CRITICAL|IMPORTANT|MANDATORY|ALWAYS|ONLY|STOP|REQUIRED|WARNING)\b'
+weight = 1.0
+
+[[marker]]
+id = "exclamation"
+pattern = '(?<=[\w)"])!+(?![=\[])'
+weight = 1.0
+scale = "superlinear"
+
+[[marker]]
+id = "shouting-tag"
+pattern = '<\s*(EXTREMELY[_-])?IMPORTANT>?'
+weight = 4.0
+
+[[marker]]
+id = "not-negotiable"
+pattern = '(?i)\b(this is not negotiable|no exceptions|under no circumstances|you cannot rationalize)\b'
+weight = 4.0
+
+[[marker]]
+id = "caps-run"
+pattern = '\b[A-Z]{2,}(?:[ \t]+[A-Z]{2,}){2,}\b'
+weight = 1.0
+scale = "linear"
+unit = "words"

@@ -1,0 +1,24 @@
+[project]
+name = "agentlint"
+version = "0.0.1"
+description = "A checker for agent configuration: what contradicts itself, what does nothing, and where the agent can't make up its mind."
+requires-python = ">=3.12"
+dependencies = [
+    "pyyaml>=6",
+]
+
+[project.scripts]
+agentlint = "agentlint.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[build-system]
+requires = ["uv_build>=0.9,<0.10"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

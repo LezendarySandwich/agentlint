@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+.claude/settings.local.json
+
+# UI: dependencies and build scratch (the built shell is src/agentlint/ui/shell.html)
+ui/node_modules
+ui/dist/
